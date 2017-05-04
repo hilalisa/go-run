@@ -4,10 +4,16 @@ package run
 // Runtime is the top level interface representing a runtime
 // capable managing the lifecycle of a microservice
 type Runtime interface {
+	// Fetch source from url
 	Fetch(url string) (*Source, error)
+	// Build the binary from source
 	Build(*Source) (*Binary, error)
+	// Execute a binary
 	Exec(*Binary) (*Process, error)
+	// Kill a process
 	Kill(*Process) error
+	// Wait for a process to exit
+	Wait(*Process) error
 }
 
 // Source represents source code fetched from a URL

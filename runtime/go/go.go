@@ -65,6 +65,21 @@ func (g *goRuntime) Kill(proc *run.Process) error {
 	return p.Kill()
 }
 
+func (g *goRuntime) Wait(proc *run.Process) error {
+	pid, err := strconv.Atoi(proc.ID)
+	if err != nil {
+		return err
+	}
+
+	p, err := os.FindProcess(pid)
+	if err != nil {
+		return err
+	}
+
+	_, err = p.Wait()
+	return err
+}
+
 // whichGo locates the go command
 func whichGo() string {
 	// check GOROOT
