@@ -7,6 +7,7 @@ service Run {
 	rpc Build(BuildRequest) returns (BuildResponse) {};
 	rpc Exec(ExecRequest) returns (ExecResponse) {};
 	rpc Kill(KillRequest) returns (KillResponse) {};
+	rpc Wait(WaitRequest) returns (stream WaitResponse) {};
 }
 
 message Source {
@@ -53,4 +54,12 @@ message KillRequest {
 }
 
 message KillResponse {
+}
+
+message WaitRequest {
+	Process process = 1;
+}
+
+message WaitResponse {
+	string error = 1;
 }
