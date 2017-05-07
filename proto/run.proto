@@ -10,6 +10,12 @@ service Runtime {
 	rpc Wait(WaitRequest) returns (stream WaitResponse) {};
 }
 
+service Service {
+	rpc Run(RunRequest) returns (RunResponse) {};
+	rpc Stop(StopRequest) returns (StopResponse) {};
+	rpc Status(StatusRequest) returns (StatusResponse) {};
+}
+
 message Source {
 	string url = 1;
 	string dir = 2;
@@ -63,4 +69,31 @@ message WaitRequest {
 
 message WaitResponse {
 	string error = 1;
+}
+
+// Service methods
+
+message RunRequest {
+	string url = 1;
+	bool restart = 2;
+	bool update = 3;
+}
+
+message RunResponse {
+	string id = 1;
+}
+
+message StopRequest {
+	string id = 1;
+}
+
+message StopResponse {
+}
+
+message StatusRequest {
+	string id = 1;
+}
+
+message StatusResponse {
+	string info = 1;
 }
