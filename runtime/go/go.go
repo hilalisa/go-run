@@ -18,11 +18,23 @@ type goRuntime struct {
 	Cmd string
 }
 
-func (g *goRuntime) Fetch(url string) (*run.Source, error) {
-	cmd := exec.Command(g.Cmd, "get", "-d", "-u", url)
+func (g *goRuntime) Fetch(url string, opts ...run.FetchOption) (*run.Source, error) {
+	var options run.FetchOptions
+	for _, o := range opts {
+		o(&options)
+	}
+
+	args := []string{"get", "-d"}
+
+	if options.Update {
+		args = append(args, "-u")
+	}
+
+	cmd := exec.Command(g.Cmd, append(args, url)...)
 	if err := cmd.Run(); err != nil {
 		return nil, err
 	}
+
 	return &run.Source{
 		URL: url,
 		Dir: filepath.Join(g.Path, "src", url),

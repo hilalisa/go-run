@@ -5,7 +5,7 @@ package run
 // capable managing the lifecycle of a microservice
 type Runtime interface {
 	// Fetch source from url
-	Fetch(url string) (*Source, error)
+	Fetch(url string, opts ...FetchOption) (*Source, error)
 	// Build the binary from source
 	Build(*Source) (*Binary, error)
 	// Execute a binary
