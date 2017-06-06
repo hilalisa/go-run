@@ -2,6 +2,7 @@
 package gorun
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -88,8 +89,16 @@ func (g *goRuntime) Wait(proc *run.Process) error {
 		return err
 	}
 
-	_, err = p.Wait()
-	return err
+	ps, err := p.Wait()
+	if err != nil {
+		return err
+	}
+
+	if ps.Success() {
+		return nil
+	}
+
+	return errors.New(ps.String())
 }
 
 // whichGo locates the go command
