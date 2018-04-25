@@ -12,7 +12,7 @@ import (
 )
 
 type microRuntime struct {
-	Client proto.RuntimeClient
+	Client proto.RuntimeService
 }
 
 func (m *microRuntime) Fetch(url string, opts ...run.FetchOption) (*run.Source, error) {
@@ -128,6 +128,6 @@ func (m *microRuntime) Wait(proc *run.Process) error {
 func NewRuntime() run.Runtime {
 	return &microRuntime{
 		// TODO: make configurable
-		Client: proto.NewRuntimeClient("go.micro.run", client.DefaultClient),
+		Client: proto.NewRuntimeService("go.micro.run", client.DefaultClient),
 	}
 }
